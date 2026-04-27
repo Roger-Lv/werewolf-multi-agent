@@ -1,0 +1,179 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── 全局基础 ─── */
+body {
+  font-family: 'Noto Serif SC', 'Inter', system-ui, -apple-system, sans-serif;
+  background: linear-gradient(135deg, #0f0a1a 0%, #1a1033 30%, #0f172a 70%, #0d0f1e 100%);
+  color: #e2e8f0;
+  min-height: 100vh;
+}
+
+/* ─── 自定义滚动条 ─── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.3);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.4);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.6);
+}
+
+/* ─── 毛玻璃面板 ─── */
+@layer components {
+  .glass-panel {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(148, 163, 184, 0.15);
+    border-radius: 12px;
+  }
+
+  .glass-panel-dark {
+    background: rgba(10, 10, 26, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(148, 163, 184, 0.1);
+    border-radius: 12px;
+  }
+
+  /* 角色专属光效边框 */
+  .role-border-werewolf {
+    border: 1px solid rgba(220, 38, 38, 0.4);
+    box-shadow: 0 0 8px rgba(220, 38, 38, 0.15);
+  }
+  .role-border-seer {
+    border: 1px solid rgba(6, 182, 212, 0.4);
+    box-shadow: 0 0 8px rgba(6, 182, 212, 0.15);
+  }
+  .role-border-witch {
+    border: 1px solid rgba(217, 70, 239, 0.4);
+    box-shadow: 0 0 8px rgba(217, 70, 239, 0.15);
+  }
+  .role-border-hunter {
+    border: 1px solid rgba(234, 179, 8, 0.4);
+    box-shadow: 0 0 8px rgba(234, 179, 8, 0.15);
+  }
+  .role-border-villager {
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    box-shadow: 0 0 6px rgba(34, 197, 94, 0.1);
+  }
+
+  /* 角色徽章 */
+  .role-badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .role-badge-werewolf {
+    background: linear-gradient(135deg, #7f1d1d, #dc2626);
+    color: #fecaca;
+  }
+  .role-badge-seer {
+    background: linear-gradient(135deg, #164e63, #06b6d4);
+    color: #cffafe;
+  }
+  .role-badge-witch {
+    background: linear-gradient(135deg, #4a044e, #d946ef);
+    color: #fae8ff;
+  }
+  .role-badge-hunter {
+    background: linear-gradient(135deg, #713f12, #eab308);
+    color: #fef9c3;
+  }
+  .role-badge-villager {
+    background: linear-gradient(135deg, #14532d, #22c55e);
+    color: #dcfce7;
+  }
+
+  /* 进度条样式 */
+  .progress-bar {
+    background: rgba(30, 41, 59, 0.6);
+    border-left: 3px solid rgba(129, 140, 248, 0.5);
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+
+  /* 阶段分隔标记 */
+  .phase-divider {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0;
+    color: rgba(148, 163, 184, 0.5);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+  .phase-divider::before,
+  .phase-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(148, 163, 184, 0.2);
+  }
+
+  /* 死亡覆盖效果 */
+  .death-overlay {
+    position: relative;
+  }
+  .death-overlay::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.5);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  /* 渐变按钮 */
+  .btn-werewolf {
+    background: linear-gradient(135deg, #7f1d1d, #dc2626);
+    transition: all 0.2s;
+  }
+  .btn-werewolf:hover {
+    box-shadow: 0 0 12px rgba(220, 38, 38, 0.4);
+  }
+  .btn-seer {
+    background: linear-gradient(135deg, #164e63, #06b6d4);
+    transition: all 0.2s;
+  }
+  .btn-seer:hover {
+    box-shadow: 0 0 12px rgba(6, 182, 212, 0.4);
+  }
+  .btn-witch {
+    background: linear-gradient(135deg, #4a044e, #d946ef);
+    transition: all 0.2s;
+  }
+  .btn-witch:hover {
+    box-shadow: 0 0 12px rgba(217, 70, 239, 0.4);
+  }
+  .btn-hunter {
+    background: linear-gradient(135deg, #713f12, #eab308);
+    transition: all 0.2s;
+  }
+  .btn-hunter:hover {
+    box-shadow: 0 0 12px rgba(234, 179, 8, 0.4);
+  }
+  .btn-villager {
+    background: linear-gradient(135deg, #14532d, #22c55e);
+    transition: all 0.2s;
+  }
+  .btn-villager:hover {
+    box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
+  }
+}

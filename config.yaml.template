@@ -1,0 +1,108 @@
+# 狼人杀多Agent自主博弈系统配置模板
+# 复制此文件为 config.yaml 并填入真实的 API key
+
+game:
+  # 角色分配：9人局（3狼人 + 3神职 + 3村民）
+  roles:
+    - werewolf   # 1号
+    - werewolf   # 2号
+    - werewolf   # 3号
+    - seer       # 4号 预言家
+    - witch      # 5号 女巫
+    - hunter     # 6号 猎人
+    - villager   # 7号
+    - villager   # 8号
+    - villager   # 9号
+
+  # 游戏规则
+  rules:
+    witch_can_save_self_first_night: true  # 女巫首夜可自救
+    tie_vote_rule: "random"                # 平票随机淘汰
+    werewolf_disagree_rule: "random"       # 狼人意见不统一时随机选目标
+    hunter_can_shoot_on_witch_poison: true # 猎人被毒死不能开枪(此处true=可开枪,设false则不可)
+
+  # GM使用的模型
+  gm:
+    base_url: "<YOUR_API_BASE_URL>"        # e.g. https://cloud.infini-ai.com/maas/v1
+    api_key: "<YOUR_API_KEY>"              # e.g. sk-xxxx
+    model: "<YOUR_MODEL>"                  # e.g. glm-5.1
+
+  # 摘要使用的模型
+  summarizer:
+    base_url: "<YOUR_API_BASE_URL>"
+    api_key: "<YOUR_API_KEY>"
+    model: "<YOUR_MODEL>"
+
+  # 上下文摘要阈值（超过此条数触发摘要压缩）
+  summary_threshold: 15
+
+# 玩家配置：每个玩家编号对应一个模型或人类
+# type: "llm" = 大模型自动博弈, "human" = 人类通过前端参与
+players:
+  1:
+    type: "llm"
+    base_url: "<YOUR_API_BASE_URL>"
+    api_key: "<YOUR_API_KEY>"
+    model: "<YOUR_MODEL>"                  # e.g. kimi-k2.6
+    personality: "aggressive"              # 激进
+
+  2:
+    type: "llm"
+    base_url: "<YOUR_API_BASE_URL>"
+    api_key: "<YOUR_API_KEY>"
+    model: "<YOUR_MODEL>"
+    personality: "cunning"                 # 狡诈
+
+  3:
+    type: "llm"
+    base_url: "<YOUR_API_BASE_URL>"
+    api_key: "<YOUR_API_KEY>"
+    model: "<YOUR_MODEL>"
+    personality: "conservative"            # 保守
+
+  4:
+    type: "llm"
+    base_url: "<YOUR_API_BASE_URL>"
+    api_key: "<YOUR_API_KEY>"
+    model: "<YOUR_MODEL>"
+    personality: "analytical"              # 理性分析
+
+  5:
+    type: "llm"
+    base_url: "<YOUR_API_BASE_URL>"
+    api_key: "<YOUR_API_KEY>"
+    model: "<YOUR_MODEL>"
+    personality: "cautious"                # 谨慎
+
+  6:
+    type: "llm"
+    base_url: "<YOUR_API_BASE_URL>"
+    api_key: "<YOUR_API_KEY>"
+    model: "<YOUR_MODEL>"
+    personality: "bold"                    # 大胆
+
+  7:
+    type: "llm"
+    base_url: "<YOUR_API_BASE_URL>"
+    api_key: "<YOUR_API_KEY>"
+    model: "<YOUR_MODEL>"
+    personality: "eloquent"                # 雄辩
+
+  8:
+    type: "llm"
+    base_url: "<YOUR_API_BASE_URL>"
+    api_key: "<YOUR_API_KEY>"
+    model: "<YOUR_MODEL>"
+    personality: "observant"               # 善于观察
+
+  9:
+    type: "llm"
+    base_url: "<YOUR_API_BASE_URL>"
+    api_key: "<YOUR_API_KEY>"
+    model: "<YOUR_MODEL>"
+    personality: "strategic"               # 策略型
+
+  # 人类玩家示例（取消注释即可启用）：
+  # 5:
+  #   type: "human"
+  #   personality: "cautious"

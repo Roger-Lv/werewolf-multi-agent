@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+
+# uv lock file (optional — keep if you want reproducible installs)
+# uv.lock
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Sensitive config — contains API keys
+config.yaml
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Logs
+*.log
+
+# Claude Code
+.claude/
