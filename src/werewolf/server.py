@@ -321,7 +321,7 @@ async def start_game():
 @app.post("/api/game/stop")
 async def stop_game():
     """停止游戏"""
-    global game_task, game_running
+    global game_task, game_running, engine
     if game_task:
         game_task.cancel()
         try:
@@ -329,7 +329,56 @@ async def stop_game():
         except asyncio.CancelledError:
             pass
     game_running = False
+    if engine:
+        await engine.close()
+        engine = None
+    # 通知所有连接游戏已重置
+    await ws_manager.broadcast_public("game_reset", {"message": "游戏已停止"})
     return {"status": "stopped"}
+
+
+@app.post("/api/game/restart")
+async def restart_game():
+    """重新开始游戏：关闭旧引擎，创建新引擎"""
+    global engine, game_task, game_running
+
+    # 停止旧游戏
+    if game_task:
+        game_task.cancel()
+        try:
+            await game_task
+        except asyncio.CancelledError:
+            pass
+    game_running = False
+    if engine:
+        await engine.close()
+
+    # 创建新引擎
+    config = load_config()
+    game_cfg = get_game_config(config)
+    rules = get_rules(config)
+    players_cfg = get_players_config(config)
+    roles_list = get_roles(config)
+
+    human_providers = {}
+    for pid, cfg in players_cfg.items():
+        if cfg.get("type") == "human":
+            human_providers[pid] = HumanActionProvider(pid, ws_manager)
+
+    engine = GameEngine(
+        players_cfg=players_cfg,
+        roles=roles_list,
+        gm_cfg=get_gm_config(config),
+        summarizer_cfg=get_summarizer_config(config),
+        rules=rules,
+        summary_threshold=get_summary_threshold(config),
+        human_providers=human_providers,
+    )
+
+    # 通知所有连接游戏已重置
+    await ws_manager.broadcast_public("game_reset", {"message": "游戏已重置，等待开始"})
+
+    return {"status": "ready"}
 
 
 def main():

@@ -94,6 +94,20 @@ onUnmounted(() => {
           开始游戏
         </button>
         <button
+          v-if="store.gameStatus === 'ended'"
+          @click="store.restartGame()"
+          class="px-4 py-2 rounded-lg text-sm font-medium text-white bg-gradient-to-r from-emerald-700 to-emerald-500 hover:from-emerald-600 hover:to-emerald-400 shadow-md hover:shadow-lg transition-all"
+        >
+          重新开始
+        </button>
+        <button
+          v-if="store.gameStatus === 'running'"
+          @click="store.stopGame()"
+          class="px-4 py-2 rounded-lg text-sm font-medium text-white bg-gradient-to-r from-red-800 to-red-600 hover:from-red-700 hover:to-red-500 shadow-md hover:shadow-lg transition-all"
+        >
+          停止游戏
+        </button>
+        <button
           @click="store.disconnect()"
           class="px-3 py-1.5 bg-slate-800/60 hover:bg-slate-700/60 text-slate-400 rounded-lg text-sm border border-slate-700/30 transition-all"
         >

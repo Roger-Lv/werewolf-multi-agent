@@ -18,6 +18,7 @@ function eventIcon(type: string): string {
   const icons: Record<string, string> = {
     system: '🔌',
     progress: '⏳',
+    game_reset: '🔄',
     night_start: '🌙',
     night_result: '💀',
     seer_check_public: '🔍',
@@ -38,6 +39,7 @@ function eventIcon(type: string): string {
 function eventCardClass(type: string): string {
   const classes: Record<string, string> = {
     progress: 'progress-bar',
+    game_reset: 'border-l-3 border-emerald-500/40 bg-emerald-950/30',
     night_start: 'border-l-3 border-indigo-500/40 bg-indigo-950/30',
     night_result: 'border-l-3 border-red-500/40 bg-red-950/20',
     seer_check_public: 'border-l-3 border-cyan-500/30 bg-cyan-950/20',
@@ -132,6 +134,11 @@ const phaseDividers = computed(() => {
                 <span class="text-slate-500 italic">{{ event.data.message }}</span>
               </template>
 
+              <!-- Game reset -->
+              <template v-if="event.type === 'game_reset'">
+                <span class="text-emerald-300 font-medium">{{ event.data.message }}</span>
+              </template>
+
               <!-- Night start -->
               <template v-if="event.type === 'night_start'">
                 <span class="text-indigo-300 font-medium">夜幕降临，各角色行动中...</span>
@@ -194,7 +201,7 @@ const phaseDividers = computed(() => {
               </template>
 
               <!-- Default -->
-              <template v-if="!['system','progress','night_start','night_result','seer_check_private','player_speech','player_vote','vote_result','hunter_shoot','game_over','waiting_for_player'].includes(event.type)">
+              <template v-if="!['system','game_reset','progress','night_start','night_result','seer_check_private','player_speech','player_vote','vote_result','hunter_shoot','game_over','waiting_for_player'].includes(event.type)">
                 <span class="text-slate-400">{{ JSON.stringify(event.data) }}</span>
               </template>
             </div>

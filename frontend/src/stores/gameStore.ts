@@ -181,6 +181,18 @@ export const useGameStore = defineStore('game', () => {
         addEvent('game_over', data)
         break
 
+      case 'game_reset':
+        // 游戏重置：清空状态，等待新游戏
+        phase.value = 'night'
+        round.value = 1
+        gameStatus.value = 'not_started'
+        events.value = []
+        pendingAction.value = null
+        players.value = []
+        myRoleInfo.value = null
+        addEvent('system', { message: data.message as string || '游戏已重置' })
+        break
+
       case 'waiting_for_player':
         addEvent('waiting_for_player', data)
         break
@@ -244,6 +256,33 @@ export const useGameStore = defineStore('game', () => {
     }
   }
 
+  async function restartGame() {
+    try {
+      const baseUrl = import.meta.env.DEV ? 'http://localhost:8000' : ''
+      await fetch(`${baseUrl}/api/game/restart`, { method: 'POST' })
+      gameStatus.value = 'not_started'
+      phase.value = 'night'
+      round.value = 1
+      events.value = []
+      pendingAction.value = null
+      myRoleInfo.value = null
+      // 等一下让后端完成重置，然后刷新状态
+      await new Promise(r => setTimeout(r, 500))
+      await fetchState()
+    } catch (e) {
+      console.error('Failed to restart game', e)
+    }
+  }
+
+  async function stopGame() {
+    try {
+      const baseUrl = import.meta.env.DEV ? 'http://localhost:8000' : ''
+      await fetch(`${baseUrl}/api/game/stop`, { method: 'POST' })
+    } catch (e) {
+      console.error('Failed to stop game', e)
+    }
+  }
+
   function disconnect() {
     if (ws.value) {
       ws.value.close()
@@ -257,6 +296,6 @@ export const useGameStore = defineStore('game', () => {
     pendingAction, gameStatus, connected, ws,
     aliveIds, isHumanPlayer, hasPendingAction,
     roleColorMap, roleNameMap,
-    connect, submitAction, fetchState, fetchMyRole, startGame, disconnect, addEvent,
+    connect, submitAction, fetchState, fetchMyRole, startGame, restartGame, stopGame, disconnect, addEvent,
   }
 })
