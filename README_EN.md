@@ -1,5 +1,7 @@
 # Multi-Agent Werewolf Game System
 
+![banner](werewolf.png)
+
 A werewolf game where different LLM providers act as independent players, engaging in fully autonomous strategic gameplay. Human players can also participate through a real-time web frontend.
 
 ## Key Features
